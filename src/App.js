@@ -1,31 +1,46 @@
 import React, { Component } from 'react'
+import './global.css'
 
-class App extends Component {
+class Hijo extends Component {
 
-    state = {
-        color: 'red'
-    }
-
-    manejador = (event) => {
-
-        const color = event.target.value
-
-        this.setState({
-            color: color
-        })
+    manejadorClick = () => {
+        this.props.onSaluda('Ninja en React 🔥 ')
     }
 
     render() {
         return (
-            <div>
-                <input
-                    type="text"
-                    onChange={this.manejador}
-                />
-                <h1
-                    style={{ color: this.state.color }}
+            <div className='box blue'>
+                <h2>Hijo</h2>
+                <button
+                    onClick={this.manejadorClick}
                 >
-                    {this.state.color}
+                    Saluda
+                </button>
+            </div>
+        )
+    }
+}
+
+class App extends Component {
+
+    state = {
+        name: ''
+    }
+
+    manejador = (name) => {
+        this.setState((state) => ({
+            name
+        }))
+    }
+
+    render() {
+        return (
+            <div className='box red'>
+                <Hijo
+                    onSaluda={this.manejador}
+                />
+                <h1>
+                    Nombre: {this.state.name}
                 </h1>
             </div>
         )
