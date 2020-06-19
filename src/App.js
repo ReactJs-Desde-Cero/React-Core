@@ -1,40 +1,43 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-const Title = (props) => {
-    const styles = {
-        padding: '0.3m',
-        color: '#FFF',
-        background: props.uiColor,
-        borderRadius: '0.3em',
-        textAlign: 'center',
-        fontSize: '50px'
-    }
+class Profile extends Component {
 
-    return (
-        <h1 style={styles}>
-            {props.children}
-        </h1>
-    )
-}
-
-class App extends Component {
-
-    state = {
-        uiColor: 'purple'
+    static propTypes = {
+        name: PropTypes.string.isRequired,
+        bio: PropTypes.string,
+        email: PropTypes.string,
+        age: PropTypes.number
     }
 
     render() {
+        const { name, bio, email } = this.props
         return (
             <div>
-                <Title
-                    uiColor={this.state.uiColor}
-                >
-                    Super <em>Ninja</em>
-                </Title>
+                <h1>{name}</h1>
+                <p>
+                    {bio}
+                </p>
+                <a href={`mailto:${email}`}>
+                    {email}
+                </a>
             </div>
         )
     }
 }
 
+class App extends Component {
+    render() {
+        return (
+            <div>
+                <Profile
+                    name='Alexander'
+                    bio='Desarollador Back End'
+                    email='alexander.ayras@gmail.com'
+                />
+            </div>
+        )
+    }
+}
 
 export default App
