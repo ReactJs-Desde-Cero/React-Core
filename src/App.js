@@ -1,42 +1,40 @@
 import React, { Component } from 'react'
 
-class Gato extends Component {
-    render() {
-        return (
-            <div>
-                <h1>Gato 🐈</h1>
-                <pre>
-                    {JSON.stringify(this.props, null, 4)}
-                </pre>
-            </div>
-        )
-    }
+const styles = {
+    height: '200px',
+    background: 'gold',
+    padding: '1em',
+    boxSizing: 'border-box'
 }
-
-
 
 class App extends Component {
 
     state = {
-        vidas: 5,
-        color: 'white and black',
-        name: 'Mishi'
+        x: 0,
+        y: 0
+    }
+
+    manejador = (event) => {
+
+        this.setState({
+            x: event.clientX,
+            y: event.clientY
+        })
+
     }
 
     render() {
-
-        const otrosDatos = {
-            raza: 'Tropical',
-            peleas: 300
-        }
         return (
-            <div>
-                <Gato
-                    name='Garfield'
-                    age='2 años'
-                    {...otrosDatos}
-                    {...this.state}
-                />
+            <div
+                style={styles}
+                onMouseMove={this.manejador}
+            >
+                <div>
+                    x: {this.state.x}
+                </div>
+                <div>
+                    y: {this.state.y}
+                </div>
             </div>
         )
     }
