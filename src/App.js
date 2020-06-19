@@ -1,44 +1,45 @@
 import React, { Component } from 'react'
-import { render } from '@testing-library/react'
 
-class Contador extends Component {
-
-    state = {
-        video: {
-            titulo: 'Super Video',
-            likes: 0
-        }
-    }
-
-    add = () => {
-        this.setState((state) => ({
-            video: {
-                ...state.video,
-                likes: state.video.likes + 1
-            }
-        }))
-    }
-
+class Gato extends Component {
     render() {
         return (
             <div>
-                <h1>{this.state.video.titulo} 🎮 </h1>
-                <button
-                    onClick={this.add}
-                >
-                    Likes: {this.state.video.likes}
-                </button>
+                <h1>Gato 🐈</h1>
+                <pre>
+                    {JSON.stringify(this.props, null, 4)}
+                </pre>
             </div>
         )
     }
 }
 
-const App = (props) => {
-    return (
-        <div>
-            <Contador />
-        </div>
-    )
+
+
+class App extends Component {
+
+    state = {
+        vidas: 5,
+        color: 'white and black',
+        name: 'Mishi'
+    }
+
+    render() {
+
+        const otrosDatos = {
+            raza: 'Tropical',
+            peleas: 300
+        }
+        return (
+            <div>
+                <Gato
+                    name='Garfield'
+                    age='2 años'
+                    {...otrosDatos}
+                    {...this.state}
+                />
+            </div>
+        )
+    }
 }
 
 export default App
