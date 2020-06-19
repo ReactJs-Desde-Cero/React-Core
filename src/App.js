@@ -1,26 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
 
-function App() {
+const Unicorn = (props) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <span
+      role='img' aria-label='unicornio'
+    >
+      🦄
+    </span>
+  )
 }
 
-export default App;
+class InputNoControlado extends Component {
+
+  nombre = React.createRef()
+  email = React.createRef()
+
+  handleClick = () => {
+    const nombre = this.nombre.current.value
+    const email = this.email.current.value
+
+    // Menejo de Datos
+
+    this.props.onSend({ nombre, email })
+
+  }
+
+  render() {
+    return (
+      <div>
+        <input
+          type="text"
+          ref={this.nombre}
+          placeholder='Nombre'
+        />
+        <input
+          type="text"
+          ref={this.email}
+          placeholder='Email'
+        />
+        <button
+          onClick={this.handleClick}
+        >
+          Enviar
+        </button>
+      </div>
+    )
+  }
+}
+
+class App extends Component {
+
+  send = (data) => {
+    console.log(data);
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>
+          Inputs No Controlados Refs <Unicorn />
+        </h1>
+        <InputNoControlado
+          onSend={this.send}
+        />
+      </div>
+    )
+  }
+}
+
+export default App
