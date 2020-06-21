@@ -1,48 +1,63 @@
 import React, { Component } from 'react'
 
-const Unicorn = (props) => {
-  return (
-    <span
-      role='img'
-      aria-label='unicornio'
-    >
-      🦄
-    </span>
-  )
+class Imagen extends Component {
+  render() {
+    return (
+      <span
+        role='img' aria-label='unicornio'
+      >
+        🦄
+      </span>
+    )
+  }
 }
 
 class App extends Component {
 
   state = {
-    tech: 'Vue'
+    techs: ['Vue']
   }
 
   handleChange = (e) => {
 
-    this.setState({
-      tech: e.target.value
-    })
+    const techs = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    )
 
+    this.setState({
+      techs
+    })
   }
 
   render() {
     return (
       <div>
-        <h1>
-          Etiqueta Select <Unicorn />
-          {this.state.tech}
+        <h1>Etiqueta Select <Imagen />
         </h1>
         <form>
-          <select value={this.state.tech} onChange={this.handleChange}>
-            <option value="Angular">Angular</option>
+          <select
+            value={this.state.techs}
+            onChange={this.handleChange}
+            multiple={true}
+          >
             <option value="React">React</option>
-            <option selected value="Vue">Vue</option>
+            <option value="Angular">Angular</option>
+            <option value="Vue">Vue</option>
             <option value="Vanilla">Vanilla</option>
           </select>
         </form>
+        <ul>
+          {this.state.techs.map(option => (
+            <li key={option}>
+              {option}
+            </li>
+          ))}
+        </ul>
       </div>
     )
   }
 }
+
 
 export default App
