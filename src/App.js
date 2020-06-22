@@ -1,26 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class Contador extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      num: props.num
+    }
+
+    this.handleClick = this.handleClick.bind(this)
+
+    this.title = React.createRef()
+
+  }
+
+  handleClick() {
+
+    console.log(this.title.current.innerHTML);
+
+    this.setState({
+      num: this.state.num + 1
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <h2
+          ref={this.title}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          {this.state.mensaje}
+        </h2>
+        <button
+          onClick={this.handleClick}
+        >
+          Likes: ({this.state.num})
+        </button>
+      </div>
+    )
+  }
+}
+
+class App extends Component {
+
+  render() {
+    return (
+      <div>
+        <h1>Metodo Constructor</h1>
+        <Contador num={1200} />
+        <Contador num={20} />
+      </div>
+    )
+  }
 }
 
 export default App;
