@@ -14,9 +14,16 @@ class App extends Component {
 
         const title = event.target[0].value
         const url = 'https://www.omdbapi.com/?i=tt3896198&apikey=5c24385e'
-        fetch(url + '&t=' + title)
-            .then(res => res.json())
-            .then(movie => this.setState({ movie, isFetching: false }))
+
+        axios.get(url, {
+            params: {
+                t: title
+            }
+        })
+            .then(res => this.setState({
+                movie: res.data,
+                isFetching: false
+            }))
     }
 
     render() {
