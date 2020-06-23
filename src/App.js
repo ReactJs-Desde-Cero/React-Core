@@ -1,42 +1,58 @@
 import React, { Component } from 'react'
 
-class Contador extends Component {
 
-  constructor(props) {
-    super(props)
+class Http extends Component {
 
-    this.state = {
-      num: props.num
-    }
-
-    this.handleClick = this.handleClick.bind(this)
-
-    this.title = React.createRef()
-
+  state = {
+    photos: []
   }
 
-  handleClick() {
+  componentDidMount() {
+    fetch('http://jsonplaceholder.typicode.com/photos')
+      .then(res => res.json())
+      .then(photos => this.setState({ photos }))
+  }
 
-    console.log(this.title.current.innerHTML);
 
+  render() {
+
+    const { photos } = this.state
+
+    return (
+      <div>
+        {photos.map(photo => (
+          <img
+            key={photo.id}
+            src={photo.thumbnailUrl}
+            alt={photo.title}
+          />
+        ))}
+      </div>
+    )
+  }
+}
+
+class Events extends Component {
+
+  state = {
+    width: window.innerWidth
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.dandlerResize)
+  }
+
+  dandlerResize = () => {
     this.setState({
-      num: this.state.num + 1
+      width: window.innerWidth
     })
   }
+
 
   render() {
     return (
       <div>
-        <h2
-          ref={this.title}
-        >
-          {this.state.mensaje}
-        </h2>
-        <button
-          onClick={this.handleClick}
-        >
-          Likes: ({this.state.num})
-        </button>
+        <h2>Events {this.state.width}</h2>
       </div>
     )
   }
@@ -47,9 +63,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Metodo Constructor</h1>
-        <Contador num={1200} />
-        <Contador num={20} />
+        <h1>ComponentDidMount</h1>
+        <Events />
       </div>
     )
   }
