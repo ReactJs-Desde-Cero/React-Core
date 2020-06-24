@@ -1,74 +1,100 @@
 import React, { Component } from 'react'
 
-class Contador extends Component {
+const itemStyles = {
 
-  state = {
-    num: this.props.num
+  borderBottom: '1px solid #CCC',
+  marginTop: '0.4em'
+}
+
+class Item extends Component {
+
+  handleClick = () => {
+    this.props.onRemove(this.props.item)
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if (state.num < props.num) {
-      return {
-        num: props.num
-      }
+  shouldComponentUpdate(nextProps, nextState) {
+
+    if (nextProps.item.id !== this.props.item.id) {
+      return true
     }
-    return null
-  }
-
-  Aumentar = () => {
-
-    this.setState(state => ({
-      num: state.num + 1
-    }))
+    return false
 
   }
+
 
   render() {
-    const { num } = this.state
+
+    const { item } = this.props
+
+    console.log('Rnder :fire ' + item.text);
     return (
-      <div>
-        <hr />
+      <div style={itemStyles}>
         <button
-          onClick={this.Aumentar}
+          onClick={this.handleClick}
         >
-          Clicks ({num})
+          x
         </button>
+        <span>
+          {item.text}
+        </span>
       </div>
     )
   }
-
 }
-
 
 class App extends Component {
 
   state = {
-    numero: 0
+    list: []
   }
 
-  handleChange = (e) => {
-    let numero = parseInt(e.target.value)
+  agregar = (e) => {
+    e.preventDefault()
 
-    if (isNaN(numero)) {
-      numero = 0
-    }
+    const text = e.target[0].value
+    const id = Math.random().toString(16)
+    const pendiente = { text, id }
 
     this.setState(state => ({
-      numero
+      list: [
+        ...state.list,
+        pendiente
+      ]
     }))
 
+    e.target[0].value = ''
+
+  }
+
+  eliminar = (e) => {
+    this.setState((state) => ({
+      list: state.list.filter(item => item.id !== e.id)
+    }))
   }
 
   render() {
-    const { numero } = this.state
     return (
       <div>
         <h3>getDerivedStateFromProps</h3>
-        <h2> {numero} </h2>
-        <input type="text" onChange={this.handleChange} />
-        <Contador
-          num={numero}
-        />
+        <form onSubmit={this.agregar}>
+          <input
+            type='text'
+            placeholder='Ingresa tu pendiente'
+          />
+          <button>
+            Agregar
+          </button>
+        </form>
+
+        <div>
+          {this.state.list.map((item) => (
+            <Item
+              key={item.id}
+              item={item}
+              onRemove={this.eliminar}
+            />
+          ))}
+        </div>
       </div>
     )
   }
