@@ -1,114 +1,74 @@
 import React, { Component } from 'react'
-import faker from 'faker'
 
-const chatStyle = {
-  width: 230,
-  height: 300,
-  border: '1px solid gray',
-  overflow: 'auto',
-  fontFamily: 'monospace'
-}
+class Contador extends Component {
 
-const messageStyle = {
-  padding: '1em',
-  borderBottom: '1px solid #DDD'
-}
-
-const avatarStyle = {
-  width: 50,
-  height: 50,
-  borderRadius: '50%'
-}
-
-class Chat extends Component {
-
-  box = React.createRef()
-
-  getSnapshotBeforeUpdate = (prevProps, prevState) => {
-    const box = this.box.current
-
-    if (box.scrollTop + box.offsetHeight >= box.scrollHeight) {
-      return true
-    }
-
-    return false
-
+  state = {
+    num: this.props.num
   }
 
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const box = this.box.current
-
-    if (snapshot) {
-      box.scrollTop = box.scrollHeight
+  static getDerivedStateFromProps(props, state) {
+    if (state.num < props.num) {
+      return {
+        num: props.num
+      }
     }
+    return null
   }
 
+  Aumentar = () => {
+
+    this.setState(state => ({
+      num: state.num + 1
+    }))
+
+  }
 
   render() {
+    const { num } = this.state
     return (
-      <div
-        style={chatStyle}
-        ref={this.box}
-      >
-        {this.props.list.map(item => (
-          <div
-            key={item.id}
-            style={messageStyle}
-          >
-            <p> {item.message} </p>
-            <div>
-              {item.name}
-            </div>
-            <img
-              src={item.avatar}
-              alt="Avatar"
-              style={avatarStyle}
-            />
-          </div>
-        ))}
+      <div>
+        <hr />
+        <button
+          onClick={this.Aumentar}
+        >
+          Clicks ({num})
+        </button>
       </div>
     )
   }
+
 }
+
 
 class App extends Component {
 
   state = {
-    list: []
+    numero: 0
   }
 
-  addMessage = () => {
+  handleChange = (e) => {
+    let numero = parseInt(e.target.value)
 
-    // crear mensaje falso
-
-    const message = {
-      id: faker.random.uuid(),
-      name: faker.name.firstName(),
-      avatar: faker.image.avatar(),
-      message: faker.hacker.phrase()
+    if (isNaN(numero)) {
+      numero = 0
     }
 
     this.setState(state => ({
-      list: [
-        ...state.list,
-        message
-      ]
+      numero
     }))
+
   }
 
   render() {
+    const { numero } = this.state
     return (
       <div>
-        <h3>getSnapShotBeforeUpdate</h3>
-        <Chat
-          list={this.state.list}
+        <h3>getDerivedStateFromProps</h3>
+        <h2> {numero} </h2>
+        <input type="text" onChange={this.handleChange} />
+        <Contador
+          num={numero}
         />
-        <button
-          onClick={this.addMessage}
-        >
-          NEW MESSAGE
-        </button>
       </div>
     )
   }
