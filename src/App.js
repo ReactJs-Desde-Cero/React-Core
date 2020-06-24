@@ -1,47 +1,72 @@
 import React, { Component } from 'react'
+import faker from 'faker'
 
-class UserDatails extends Component {
+const chatStyle = {
+  width: 230,
+  height: 300,
+  border: '1px solid gray',
+  overflow: 'auto',
+  fontFamily: 'monospace'
+}
 
-  state = {
-    user: {},
-    isFetching: false
+const messageStyle = {
+  padding: '1em',
+  borderBottom: '1px solid #DDD'
+}
+
+const avatarStyle = {
+  width: 50,
+  height: 50,
+  borderRadius: '50%'
+}
+
+class Chat extends Component {
+
+  box = React.createRef()
+
+  getSnapshotBeforeUpdate = (prevProps, prevState) => {
+    const box = this.box.current
+
+    if (box.scrollTop + box.offsetHeight >= box.scrollHeight) {
+      return true
+    }
+
+    return false
+
   }
 
-  componentDidMount() {
 
-    this.fetchData()
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const box = this.box.current
 
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.userId !== this.props.userId) {
-      this.fetchData()
+    if (snapshot) {
+      box.scrollTop = box.scrollHeight
     }
   }
 
-  fetchData = () => {
-    this.setState({
-      isFetching: true
-    })
-    const URL = 'http://jsonplaceholder.typicode.com/users/' + this.props.userId
-    fetch(URL)
-      .then(res => res.json())
-      .then(user => this.setState({ user, isFetching: false }))
-  }
 
   render() {
     return (
-      <div>
-        <h2>User Details</h2>
-        {this.state.isFetching
-
-          ? <h1>Cargando....</h1>
-          : (
-            <pre>
-              {JSON.stringify(this.state.user, null, 4)}
-            </pre>
-          )
-        }
+      <div
+        style={chatStyle}
+        ref={this.box}
+      >
+        {this.props.list.map(item => (
+          <div
+            key={item.id}
+            style={messageStyle}
+          >
+            <p> {item.message} </p>
+            <div>
+              {item.name}
+            </div>
+            <img
+              src={item.avatar}
+              alt="Avatar"
+              style={avatarStyle}
+            />
+          </div>
+        ))}
       </div>
     )
   }
@@ -50,32 +75,40 @@ class UserDatails extends Component {
 class App extends Component {
 
   state = {
-    id: 1
+    list: []
   }
 
-  aumentar = () => {
+  addMessage = () => {
+
+    // crear mensaje falso
+
+    const message = {
+      id: faker.random.uuid(),
+      name: faker.name.firstName(),
+      avatar: faker.image.avatar(),
+      message: faker.hacker.phrase()
+    }
+
     this.setState(state => ({
-      id: state.id + 1
+      list: [
+        ...state.list,
+        message
+      ]
     }))
   }
 
   render() {
-    const { id } = this.state
     return (
       <div>
-        <h1>ComponentDidUpdate</h1>
-        <h2>ID: {id}</h2>
-        <button
-          onClick={this.aumentar}
-        >
-          Aumentar
-        </button>
-        <button>
-          Disminuir
-        </button>
-        <UserDatails
-          userId={id}
+        <h3>getSnapShotBeforeUpdate</h3>
+        <Chat
+          list={this.state.list}
         />
+        <button
+          onClick={this.addMessage}
+        >
+          NEW MESSAGE
+        </button>
       </div>
     )
   }
