@@ -18,11 +18,11 @@ const Header = () => {
   return (
     <header style={headerStyles}>
       <div>
-        Comunicacion entre componentes
+        Hijo a Padre
       </div>
       <div style={subtitleStyles}>
-        Metodos de Instancia
-        <span role='image' aria='flame'>
+        Event Bubbling
+        <span role='img' aria-label='flame' >
           🔥
         </span>
       </div>
@@ -31,23 +31,29 @@ const Header = () => {
 
 }
 
+const boxStyles = {
+  padding: '0.5em',
+  margin: '0.5em',
+  border: '1px solid gray',
+  borderRadius: '0.3em',
+  textAlign: 'center'
+}
+
 class Hijo extends Component {
 
-  state = {
-    message: '*****'
-  }
-
-  disparcherClick = (e, message = 'Hola desde el Hijo') => {
-    alert(message)
-
-    this.setState({ message })
+  handleClick = (e) => {
+    // e.stopPropagation()
+    e.saludo = 'Este mensaje es desde el hijo'
+    console.log('Click en <Hijo />');
   }
 
   render() {
     return (
-      <div>
-        <h2>{this.state.message}</h2>
-        <button onClick={this.disparcherClick}>Hijo</button>
+      <div
+        style={boxStyles}
+        onClick={this.handleClick}
+      >
+        <p>Hijo</p>
       </div>
     )
   }
@@ -55,18 +61,18 @@ class Hijo extends Component {
 
 class App extends Component {
 
-  hijo = React.createRef()
-
-  handleCLick = () => {
-    this.hijo.current.disparcherClick(null, 'Hola desde el Padre')
+  handleClick = (e) => {
+    console.log('Click en <Padre />', e.saludo);
   }
 
   render() {
     return (
-      <div>
+      <div
+        style={boxStyles}
+        onClick={this.handleClick}
+      >
         <Header />
-        <Hijo ref={this.hijo} />
-        <button onClick={this.handleCLick}>Padre</button>
+        <Hijo />
       </div>
     )
   }
