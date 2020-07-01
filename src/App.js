@@ -1,26 +1,75 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
 
-function App() {
+const Header = () => {
+
+  const subtitleStyles = {
+    fontWeight: 'bold'
+  }
+
+  const headerStyles = {
+    margin: '0.6em',
+    borderRadius: '0.3em',
+    border: '1px solid #d2d2d2',
+    padding: '2em 0.4em',
+    fontFamily: 'monospace',
+    fontSize: '17px'
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <header style={headerStyles}>
+      <div>
+        Comunicacion entre componentes
+      </div>
+      <div style={subtitleStyles}>
+        Metodos de Instancia
+        <span role='image' aria='flame'>
+          🔥
+        </span>
+      </div>
+    </header>
+  )
+
+}
+
+class Hijo extends Component {
+
+  state = {
+    message: '*****'
+  }
+
+  disparcherClick = (e, message = 'Hola desde el Hijo') => {
+    alert(message)
+
+    this.setState({ message })
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>{this.state.message}</h2>
+        <button onClick={this.disparcherClick}>Hijo</button>
+      </div>
+    )
+  }
+}
+
+class App extends Component {
+
+  hijo = React.createRef()
+
+  handleCLick = () => {
+    this.hijo.current.disparcherClick(null, 'Hola desde el Padre')
+  }
+
+  render() {
+    return (
+      <div>
+        <Header />
+        <Hijo ref={this.hijo} />
+        <button onClick={this.handleCLick}>Padre</button>
+      </div>
+    )
+  }
 }
 
 export default App;
