@@ -39,21 +39,40 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-class Hijo extends Component {
+const blueStyles = {
+  ...boxStyles,
+  border: '1px solid blue'
+}
 
-  handleClick = (e) => {
-    // e.stopPropagation()
-    e.saludo = 'Este mensaje es desde el hijo'
-    console.log('Click en <Hijo />');
-  }
+const redStyles = {
+  ...boxStyles,
+  border: '1px solid red'
+}
+
+class ComponentA extends Component {
 
   render() {
+
+    const { num } = this.props
     return (
-      <div
-        style={boxStyles}
-        onClick={this.handleClick}
-      >
-        <p>Hijo</p>
+      <div style={blueStyles}>
+        <button onClick={this.props.onAdd} >
+          Component A ( {num} )
+        </button>
+      </div>
+    )
+  }
+}
+
+class ComponentB extends Component {
+  render() {
+
+    const { num } = this.props
+    return (
+      <div style={redStyles}>
+        <button onClick={this.props.onAdd} >
+          Component B ( {num} )
+        </button>
       </div>
     )
   }
@@ -61,18 +80,42 @@ class Hijo extends Component {
 
 class App extends Component {
 
-  handleClick = (e) => {
-    console.log('Click en <Padre />', e.saludo);
+  state = {
+    countA: 0,
+    countB: 0
+  }
+
+  handleAddA = (e) => {
+
+    this.setState(state => ({
+      countA: state.countA + 1
+    }))
+
+    console.log(e);
+  }
+
+  handleAddB = () => {
+
+    this.setState(state => ({
+      countB: state.countB + 2
+    }))
   }
 
   render() {
+
+    const { countA, countB } = this.state
+
     return (
-      <div
-        style={boxStyles}
-        onClick={this.handleClick}
-      >
+      <div style={boxStyles} >
         <Header />
-        <Hijo />
+        <ComponentA
+          num={countA}
+          onAdd={this.handleAddB}
+        />
+        <ComponentB
+          num={countB}
+          onAdd={this.handleAddA}
+        />
       </div>
     )
   }
