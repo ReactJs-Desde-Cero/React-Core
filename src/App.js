@@ -58,24 +58,12 @@ class Bisnieto extends Component {
     message: '******'
   }
 
-  componentDidMount() {
-    PubSub.subscribe('otro evento', (e, data) => {
-
-      this.setState((state) => ({
-        message: data.title
-      }))
-    })
-  }
-
-  componentWillMount() {
-    PubSub.unsubscribe('otro evento')
-  }
-
-
 
   handleClick = () => {
 
-    PubSub.publish('saludo', 'Hola desde el Bisnieto')
+    this.setState((state) => ({
+      message: window.title
+    }))
 
   }
 
@@ -107,18 +95,12 @@ class Nieto extends Component {
 class App extends Component {
 
   componentDidMount() {
-    PubSub.subscribe('saludo', (e, data) => {
-      alert(data)
-    })
-  }
-
-  componentWillMount() {
-    PubSub.clearAllSubscriptions()
+    window.title = 'React es cool!!'
   }
 
 
   handleClick = () => {
-    PubSub.publish('otro evento', { title: 'Hola desde <App />' })
+    window.title = '#########'
   }
 
   render() {
