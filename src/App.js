@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PubSub, { publish } from 'pubsub-js'
 
 const Header = () => {
 
@@ -18,10 +19,10 @@ const Header = () => {
   return (
     <header style={headerStyles}>
       <div>
-        Hijo a Padre
+        ( Cualquiera )
       </div>
       <div style={subtitleStyles}>
-        Event Bubbling
+        Observer Pattern
         <span role='img' aria-label='flame' >
           🔥
         </span>
@@ -39,83 +40,95 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-const blueStyles = {
-  ...boxStyles,
-  border: '1px solid blue'
-}
-
-const redStyles = {
-  ...boxStyles,
-  border: '1px solid red'
-}
-
-class ComponentA extends Component {
+class Hijo extends Component {
 
   render() {
-
-    const { num } = this.props
     return (
-      <div style={blueStyles}>
-        <button onClick={this.props.onAdd} >
-          Component A ( {num} )
+      <div style={boxStyles}>
+        <Nieto />
+      </div>
+    )
+  }
+
+}
+
+class Bisnieto extends Component {
+
+  state = {
+    message: '******'
+  }
+
+  componentDidMount() {
+    PubSub.subscribe('otro evento', (e, data) => {
+
+      this.setState((state) => ({
+        message: data.title
+      }))
+    })
+  }
+
+  componentWillMount() {
+    PubSub.unsubscribe('otro evento')
+  }
+
+
+
+  handleClick = () => {
+
+    PubSub.publish('saludo', 'Hola desde el Bisnieto')
+
+  }
+
+  render() {
+    return (
+      <div style={boxStyles}>
+        <p>{this.state.message}</p>
+        <button onClick={this.handleClick} >
+          NIETO
         </button>
       </div>
     )
   }
+
 }
 
-class ComponentB extends Component {
-  render() {
+class Nieto extends Component {
 
-    const { num } = this.props
+  render() {
     return (
-      <div style={redStyles}>
-        <button onClick={this.props.onAdd} >
-          Component B ( {num} )
-        </button>
+      <div style={boxStyles}>
+        <Bisnieto />
       </div>
     )
   }
+
 }
 
 class App extends Component {
 
-  state = {
-    countA: 0,
-    countB: 0
+  componentDidMount() {
+    PubSub.subscribe('saludo', (e, data) => {
+      alert(data)
+    })
   }
 
-  handleAddA = (e) => {
-
-    this.setState(state => ({
-      countA: state.countA + 1
-    }))
-
-    console.log(e);
+  componentWillMount() {
+    PubSub.clearAllSubscriptions()
   }
 
-  handleAddB = () => {
 
-    this.setState(state => ({
-      countB: state.countB + 2
-    }))
+  handleClick = () => {
+    PubSub.publish('otro evento', { title: 'Hola desde <App />' })
   }
 
   render() {
-
-    const { countA, countB } = this.state
-
     return (
       <div style={boxStyles} >
+        <button onClick={this.handleClick}>
+          PADRE
+        </button>
         <Header />
-        <ComponentA
-          num={countA}
-          onAdd={this.handleAddB}
-        />
-        <ComponentB
-          num={countB}
-          onAdd={this.handleAddA}
-        />
+        <Hijo />
       </div>
     )
   }
