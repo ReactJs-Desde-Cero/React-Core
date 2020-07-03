@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 
-const { Provider, Consumer } = React.createContext()
-
 const Header = () => {
 
   const subtitleStyles = {
@@ -41,55 +39,49 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-class List extends Component {
+class Resize extends Component {
+
+  state = {
+    width: window.innerWidth,
+    height: window.innerHeight
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  handleResize = () => {
+
+    this.setState((state) => ({
+      width: window.innerWidth,
+      height: window.innerHeight
+    }))
+
+  }
+
   render() {
 
-    const { list, render } = this.props
+    const { render } = this.props
+    const { width, height } = this.state
 
-    return (
-      <div>
-        {list.map((item, index) => {
-
-          if (render) {
-            return render(item, index)
-          }
-
-          return (
-            <li key={item.name}>
-              {item.name}
-            </li>
-          )
-        })}
-      </div>
-    )
+    return render({ width, height })
   }
 }
 
 class App extends Component {
-
-  state = {
-    fruits: [
-      { name: 'Fresa', price: 22 },
-      { name: 'Mango', price: 18 },
-      { name: 'Sandia', price: 24 },
-      { name: 'Manzana', price: 12 }
-    ]
-  }
-
   render() {
-
-    const { fruits } = this.state
-
     return (
       <div style={boxStyles} >
         <Header />
-        <List
-          list={fruits}
-          render={(data, index) => (
-            <div>
-              {data.name} - ${data.price}
-            </div>
-          )}
+        <Resize
+          render={({ width, height }) => {
+            return (
+              <div>
+                <h1>Width: {width}</h1>
+                <li>{height}</li>
+              </div>
+            )
+          }}
         />
       </div>
     )
