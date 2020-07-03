@@ -39,53 +39,46 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-class Resize extends Component {
+// El nombre siempre empieza con With
+const withCounter = (Comp) => {
+  return class extends Component {
+    state = {
+      num: parseInt(Math.random() * 100) * 5
+    }
 
-  state = {
-    width: window.innerWidth,
-    height: window.innerHeight
-  }
+    add = () => {
+      this.setState(state => ({
+        num: state.num + 1
+      }))
+    }
 
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize)
-  }
-
-  handleResize = () => {
-
-    this.setState((state) => ({
-      width: window.innerWidth,
-      height: window.innerHeight
-    }))
-
-  }
-
-  render() {
-
-    const { render } = this.props
-    const { width, height } = this.state
-
-    return render({ width, height })
+    render() {
+      const { num } = this.state
+      return (
+        <Comp
+          num={num}
+          add={this.add}
+        />
+      )
+    }
   }
 }
 
 class App extends Component {
   render() {
+
+    const { num, add } = this.props
+
     return (
       <div style={boxStyles} >
         <Header />
-        <Resize
-          render={({ width, height }) => {
-            return (
-              <div>
-                <h1>Width: {width}</h1>
-                <li>{height}</li>
-              </div>
-            )
-          }}
-        />
+        <h1>{num}</h1>
+        <button onClick={add}>
+          ADD
+        </button>
       </div>
     )
   }
 }
 
-export default App;
+export default withCounter(App);
