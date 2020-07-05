@@ -19,19 +19,19 @@ const Header = () => {
 
 const App = (params) => {
 
-  const [clicks, setClicks] = useState(0)
+  const [isActive, setClicks] = useState(false)
 
-  const addClicks = () => {
-    setClicks(clicks + 1)
+  const toggle = () => {
+    setClicks(!isActive)
   }
 
   return (
     <div>
-      <Header />
+      {isActive && <Header />}
       <button
-        onClick={addClicks}
+        onClick={toggle}
       >
-        Clicks ({clicks})
+        {isActive ? 'Desactivar' : 'Activar'}
       </button>
     </div>
   )
