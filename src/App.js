@@ -19,20 +19,39 @@ const Header = () => {
 
 const App = (params) => {
 
-  const [isActive, setClicks] = useState(false)
+  const [clicks, setClicks] = useState(0)
+  const [title, setTitle] = useState('Hooks con React')
 
-  const toggle = () => {
-    setClicks(!isActive)
+  // una manera de actualizar el State ('...state')
+
+  // const merge = (nextState) => {
+  //   setState({
+  //     ...state,
+  //     ...nextState
+  //   })
+  // }
+
+  const addClicks = () => {
+    setClicks(clicks + 1)
+  }
+
+  const handleInput = (e) => {
+    setTitle(e.target.value)
+
   }
 
   return (
     <div>
-      {isActive && <Header />}
-      <button
-        onClick={toggle}
-      >
-        {isActive ? 'Desactivar' : 'Activar'}
+      <Header />
+      <input
+        type="text"
+        value={title}
+        onChange={handleInput}
+      />
+      <button onClick={addClicks}>
+        Clicks({clicks})
       </button>
+      <h3>{title}</h3>
     </div>
   )
 }
