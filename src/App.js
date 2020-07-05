@@ -41,25 +41,29 @@ const boxStyles = {
 
 // El nombre siempre empieza con With
 const withCounter = (Comp) => {
-  return class extends Component {
-    state = {
-      num: parseInt(Math.random() * 100) * 5
-    }
+  return (conf) => {
 
-    add = () => {
-      this.setState(state => ({
-        num: state.num + 1
-      }))
-    }
+    return class extends Component {
 
-    render() {
-      const { num } = this.state
-      return (
-        <Comp
-          num={num}
-          add={this.add}
-        />
-      )
+      state = {
+        num: conf.num
+      }
+
+      add = () => {
+        this.setState(state => ({
+          num: state.num + conf.sumClick
+        }))
+      }
+
+      render() {
+        const { num } = this.state
+        return (
+          <Comp
+            num={num}
+            add={this.add}
+          />
+        )
+      }
     }
   }
 }
@@ -81,4 +85,7 @@ class App extends Component {
   }
 }
 
-export default withCounter(App);
+export default withCounter(App)({
+  num: parseInt(Math.random() * 100) * 5,
+  sumClick: 3
+})
