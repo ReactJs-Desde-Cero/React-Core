@@ -17,34 +17,35 @@ const Header = () => {
   )
 }
 
-const App = (params) => {
+const App = () => {
 
-  const [clicks, setClicks] = useState(0)
-
+  const [num, setNum] = useState(0)
+  const [emoji, setEmoji] = useState('🦁')
 
   useEffect(() => {
-    // componentDidMount()
-    // componentDidUpdate()
-    console.log('Dentro de useEffect ', clicks);
+    alert('useEffect 🎇')
+  }, [num, emoji])
 
-    return () => {
-      // componentWillMount()
-      console.log('Return de useEffect ', clicks);
-      console.log('%c------------------------', 'color: red');
-    }
+  const addClick = (e) => {
+    setNum(num + 1)
+  }
 
-  })
+  const handleClick = () => {
+    const nextEmoji = emoji === '🦁' ? '🙊' : '🦁'
 
-  const addClicks = () => {
-    setClicks(clicks + 1)
+    setEmoji(nextEmoji)
   }
 
   return (
     <div>
       <Header />
-      <button onClick={addClicks}>
-        Clicks({clicks})
+      <button onClick={addClick}>
+        ADD ({num})
       </button>
+      <button onClick={handleClick}>
+        Alternar Emoji
+      </button>
+      <h1>{emoji}</h1>
     </div>
   )
 }
