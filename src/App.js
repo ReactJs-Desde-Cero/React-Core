@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, useState } from 'react'
+import './App.css'
+const Header = () => {
 
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <header className='header'>
+      <h1>
+        Hook useState
+        <span
+          role='img'
+          aria-label='hook emoji'
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          ⚓
+        </span>
+      </h1>
+    </header>
+  )
 }
 
-export default App;
+const App = (params) => {
+
+  const [clicks, setClicks] = useState(0)
+
+  const addClicks = () => {
+    setClicks(clicks + 1)
+  }
+
+  return (
+    <div>
+      <Header />
+      <button
+        onClick={addClicks}
+      >
+        Clicks ({clicks})
+      </button>
+    </div>
+  )
+}
+
+export default App
