@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './App.css'
 const Header = () => {
 
@@ -19,26 +19,42 @@ const Header = () => {
 
 const App = () => {
 
-  const [users, setUser] = useState([])
-  const [isFetching, setFetching] = useState(true)
+  const [name, setName] = useState('')
+  const [products, setProd] = useState([])
+
+  const entrada = useRef()
 
   useEffect(() => {
-    fetch('http://jsonplaceholder.typicode.com/users')
-      .then(res => res.json())
-      .then(users => {
-        setUser(users)
-        setFetching(false)
-      })
-  }, [])
+
+    //debounce
+
+    setTimeout(() => {
+      if (name === entrada.current.value) {
+        fetch('https://universidad-react-api-test.luxfenix.now.sh/products?name=' + name)
+          .then(res => res.json())
+          .then(data => setProd(data.products))
+      }
+    }, 2000)
+  }, [name])
+
+  // Solicitud HTTP
+
+  const handleInput = (e) => {
+    setName(e.target.value)
+  }
 
   return (
     <div>
       <Header />
-      {isFetching && <h1>Cargando......</h1>}
+      <input
+        type="text"
+        onChange={handleInput}
+        ref={entrada}
+      />
       <ul>
-        {users.map((user) => (
-          <li>
-            {user.name}
+        {products.map(prod => (
+          <li key={prod.id}>
+            {prod.name}
           </li>
         ))}
       </ul>
