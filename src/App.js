@@ -19,33 +19,29 @@ const Header = () => {
 
 const App = () => {
 
-  const [num, setNum] = useState(0)
-  const [emoji, setEmoji] = useState('🦁')
+  const [users, setUser] = useState([])
+  const [isFetching, setFetching] = useState(true)
 
   useEffect(() => {
-    alert('useEffect 🎇')
-  }, [num, emoji])
-
-  const addClick = (e) => {
-    setNum(num + 1)
-  }
-
-  const handleClick = () => {
-    const nextEmoji = emoji === '🦁' ? '🙊' : '🦁'
-
-    setEmoji(nextEmoji)
-  }
+    fetch('http://jsonplaceholder.typicode.com/users')
+      .then(res => res.json())
+      .then(users => {
+        setUser(users)
+        setFetching(false)
+      })
+  }, [])
 
   return (
     <div>
       <Header />
-      <button onClick={addClick}>
-        ADD ({num})
-      </button>
-      <button onClick={handleClick}>
-        Alternar Emoji
-      </button>
-      <h1>{emoji}</h1>
+      {isFetching && <h1>Cargando......</h1>}
+      <ul>
+        {users.map((user) => (
+          <li>
+            {user.name}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
