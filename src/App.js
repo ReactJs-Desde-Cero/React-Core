@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useDebounce } from 'use-debounce'
 import './App.css'
 const Header = () => {
 
@@ -20,22 +21,18 @@ const Header = () => {
 const App = () => {
 
   const [name, setName] = useState('')
+  const [search] = useDebounce(name, 1000)
   const [products, setProd] = useState([])
-
-  const entrada = useRef()
 
   useEffect(() => {
 
     //debounce
 
-    setTimeout(() => {
-      if (name === entrada.current.value) {
-        fetch('https://universidad-react-api-test.luxfenix.now.sh/products?name=' + name)
-          .then(res => res.json())
-          .then(data => setProd(data.products))
-      }
-    }, 2000)
-  }, [name])
+    fetch('https://universidad-react-api-test.luxfenix.now.sh/products?name=' + name)
+      .then(res => res.json())
+      .then(data => setProd(data.products))
+
+  }, [search])
 
   // Solicitud HTTP
 
@@ -49,7 +46,6 @@ const App = () => {
       <input
         type="text"
         onChange={handleInput}
-        ref={entrada}
       />
       <ul>
         {products.map(prod => (
