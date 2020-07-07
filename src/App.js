@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import './App.css'
 const Header = () => {
 
@@ -17,80 +17,44 @@ const Header = () => {
   )
 }
 
-const reducer = (state, action) => {
+const FancyInput = forwardRef((props, ref) => {
 
-  switch (action.type) {
+  const [text, setText] = useState('')
 
-    case 'INCREMENT':
-      return {
-        ...state,
-        count: state.count + 1
+  useImperativeHandle(ref, () => {
+    return {
+      handleAlert: () => {
+        alert('Hola')
+      },
+      setParrafo: (message) => {
+        setText(message)
       }
+    }
+  })
 
-    case 'DECREMENT':
-      return {
-        ...state,
-        count: state.count - 1
-      }
-
-    case 'TITLE':
-      return {
-        ...state,
-        title: action.title
-      }
-
-    default:
-      break;
-  }
-}
+  return (
+    <div>
+      <h1>{text}</h1>
+      <input type="text" />
+    </div>
+  )
+})
 
 const App = () => {
 
-  const [state, dispatch] = useReducer(reducer, {
-    count: 0,
-    title: 'Hola'
-  })
+  const entrada = useRef()
 
-  const handleTitle = (e) => {
-    dispatch({
-      type: 'TITLE',
-      title: e.target.value
-    })
-  }
-
-  const handleAdd = () => {
-    dispatch({
-      type: 'INCREMENT'
-    })
-  }
-
-  const handleRemove = () => {
-    dispatch({
-      type: 'DECREMENT'
-    })
+  const handleClick = () => {
+    entrada.current.setParrafo('Hola desde el App')
   }
 
   return (
     <div>
       <Header />
-      <input
-        type="text"
-        value={state.title}
-        onChange={handleTitle}
-      />
-      <div>
-        <button
-          onClick={handleAdd}
-        >
-          INCREMENT
-        </button>
-        <button
-          onClick={handleRemove}
-        >
-          DECREMENT
-        </button>
-      </div>
-      <h1>{state.count} - {state.title}</h1>
+      <FancyInput ref={entrada} />
+      <button onClick={handleClick}>
+        DISPATCH
+      </button>
     </div>
   )
 }
