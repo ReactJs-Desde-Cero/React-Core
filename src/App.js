@@ -18,7 +18,7 @@ const Header = () => {
 }
 
 const Counter = React.memo(({ count }) => {
-  console.log('%cRender <Counter', 'color:blue');
+  console.log('%cRender <Counter />', 'color:blue');
   return (
     <div>
       <h2>{count}</h2>
@@ -26,14 +26,33 @@ const Counter = React.memo(({ count }) => {
   )
 })
 
-const Title = React.memo(({ text }) => {
-  console.log('%cRender <Counter', 'color:orangered');
+const Title = React.memo(({ title }) => {
+  console.log('%cRender <Title />', 'color:orangered');
   return (
     <div>
-      <h2>{text}</h2>
+      <h2>{title}</h2>
     </div>
   )
 })
+
+const TitleNested = React.memo(
+
+  ({ info }) => {
+    console.log('%cRender <TitleNested />', 'color:purple');
+    return (
+      <div>
+        <h2>{info.text}</h2>
+      </div>
+    )
+  },
+  (prevProps, nextProps) => {
+    // Si retorna true no se renderiza
+    // Si retorna false si se renderiza
+
+    return prevProps.info.text === nextProps.info.text
+
+  }
+)
 
 const App = () => {
 
@@ -62,7 +81,12 @@ const App = () => {
           ADD
         </button>
       </div>
-      <Counter count={count} /> - <Title title={title} />
+      <h2><Counter count={count} /> - <span><Title title={title} /></span></h2>
+      <TitleNested
+        info={{
+          text: title
+        }}
+      />
     </div>
   )
 }
