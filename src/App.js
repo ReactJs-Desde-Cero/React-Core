@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useDebounce } from 'use-debounce'
+import React, { useState, useReducer } from 'react'
 import './App.css'
 const Header = () => {
 
@@ -18,26 +17,57 @@ const Header = () => {
   )
 }
 
+const reducer = (state, action) => {
+
+  switch (action.type) {
+
+    case 'INCREMENT':
+      return {
+        ...state,
+        count: state.count + 1
+      }
+
+    case 'DECREMENT':
+      return {
+        ...state,
+        count: state.count - 1
+      }
+
+    case 'TITLE':
+      return {
+        ...state,
+        title: action.title
+      }
+
+    default:
+      break;
+  }
+}
+
 const App = () => {
 
-  const [name, setName] = useState('')
-  const [search] = useDebounce(name, 1000)
-  const [products, setProd] = useState([])
+  const [state, dispatch] = useReducer(reducer, {
+    count: 0,
+    title: 'Hola'
+  })
 
-  useEffect(() => {
+  const handleTitle = (e) => {
+    dispatch({
+      type: 'TITLE',
+      title: e.target.value
+    })
+  }
 
-    //debounce
+  const handleAdd = () => {
+    dispatch({
+      type: 'INCREMENT'
+    })
+  }
 
-    fetch('https://universidad-react-api-test.luxfenix.now.sh/products?name=' + name)
-      .then(res => res.json())
-      .then(data => setProd(data.products))
-
-  }, [search])
-
-  // Solicitud HTTP
-
-  const handleInput = (e) => {
-    setName(e.target.value)
+  const handleRemove = () => {
+    dispatch({
+      type: 'DECREMENT'
+    })
   }
 
   return (
@@ -45,15 +75,22 @@ const App = () => {
       <Header />
       <input
         type="text"
-        onChange={handleInput}
+        value={state.title}
+        onChange={handleTitle}
       />
-      <ul>
-        {products.map(prod => (
-          <li key={prod.id}>
-            {prod.name}
-          </li>
-        ))}
-      </ul>
+      <div>
+        <button
+          onClick={handleAdd}
+        >
+          INCREMENT
+        </button>
+        <button
+          onClick={handleRemove}
+        >
+          DECREMENT
+        </button>
+      </div>
+      <h1>{state.count} - {state.title}</h1>
     </div>
   )
 }
