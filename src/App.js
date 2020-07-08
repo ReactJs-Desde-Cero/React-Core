@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import './App.css'
 const Header = () => {
 
@@ -17,76 +17,39 @@ const Header = () => {
   )
 }
 
-const Counter = React.memo(({ count }) => {
-  console.log('%cRender <Counter />', 'color:blue');
-  return (
-    <div>
-      <h2>{count}</h2>
-    </div>
-  )
-})
+const getRandomColor = () => '#' + Math.random().toString(16).slice(2, 8)
 
-const Title = React.memo(({ title }) => {
-  console.log('%cRender <Title />', 'color:orangered');
-  return (
-    <div>
-      <h2>{title}</h2>
-    </div>
-  )
-})
+const Button = React.memo(({ callback, children }) => {
 
-const TitleNested = React.memo(
-
-  ({ info }) => {
-    console.log('%cRender <TitleNested />', 'color:purple');
-    return (
-      <div>
-        <h2>{info.text}</h2>
-      </div>
-    )
-  },
-  (prevProps, nextProps) => {
-    // Si retorna true no se renderiza
-    // Si retorna false si se renderiza
-
-    return prevProps.info.text === nextProps.info.text
-
+  const styles = {
+    padding: '1em',
+    fontSize: '20px',
+    background: getRandomColor()
   }
-)
+
+  return (
+    <button style={styles} onClick={callback}>
+      {children}
+    </button>
+  )
+})
 
 const App = () => {
 
-  const [count, setNum] = useState(0)
-  const [title, setTitle] = useState('')
+  const [a, setA] = useState(0)
 
-  const handleClick = () => {
-    setNum(count + 1)
-  }
-
-  const handleChange = (e) => {
-    setTitle(e.target.value)
-  }
-
+  const incrementA = useCallback(() => {
+    setA(a => a + 1)
+  }, [])
   return (
     <div>
       <Header />
-      <input
-        type="text"
-        onChange={handleChange}
-      />
-      <div>
-        <button
-          onClick={handleClick}
-        >
-          ADD
-        </button>
-      </div>
-      <h2><Counter count={count} /> - <span><Title title={title} /></span></h2>
-      <TitleNested
-        info={{
-          text: title
-        }}
-      />
+      <Button callback={incrementA}>
+        Increment A
+      </Button>
+      <h1>
+        a: {a}
+      </h1>
     </div>
   )
 }
