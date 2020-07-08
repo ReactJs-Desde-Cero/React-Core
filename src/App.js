@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useMemo } from 'react'
 import './App.css'
 const Header = () => {
 
@@ -17,48 +17,55 @@ const Header = () => {
   )
 }
 
-const getRandomColor = () => '#' + Math.random().toString(16).slice(2, 8)
+const SuperList = ({ log, list }) => {
 
-const Button = React.memo(({ callback, children }) => {
-
-  const styles = {
-    padding: '1em',
-    fontSize: '20px',
-    background: getRandomColor()
-  }
+  console.log('%cReact <SuperList /> ' + log, 'color: red');
 
   return (
-    <button style={styles} onClick={callback}>
-      {children}
-    </button>
+    <div>
+      <ul>
+        {list.map(item => (
+          <li key={item}>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
   )
-})
+
+}
 
 const App = () => {
 
-  const [a, setA] = useState(0)
-  const [b, setB] = useState(0)
+  const [clicks, setCicks] = useState(0)
 
-  const incrementA = useCallback(() => {
-    setA(a => a + 1)
+  const add = () => {
+    setCicks(clicks + 1)
+  }
+
+  const memoList = useMemo(() => {
+
+    return (
+      <SuperList
+        list={[1, 2, 3, 4, 5]}
+        log='Memorizando'
+      />
+    )
+
   }, [])
-
-  const incrementB = useCallback(() => {
-    setB(b => b + a)
-  }, [a])
 
   return (
     <div>
       <Header />
-      <Button callback={incrementA}>
-        Increment A
-      </Button>
-      <Button callback={incrementB}>
-        Increment B
-      </Button>
-      <h1>
-        a: {a} - b: {b}
-      </h1>
+      <button onClick={add}>
+        add ({clicks})
+      </button>
+      <SuperList
+        list={['mango', 'pera', 'platano', 'sandia', 'uva']}
+        log='Normal'
+      />
+
+      {memoList}
     </div>
   )
 }
