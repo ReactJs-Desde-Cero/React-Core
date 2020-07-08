@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 const Header = () => {
 
@@ -17,55 +17,42 @@ const Header = () => {
   )
 }
 
-const SuperList = ({ log, list }) => {
+const useSizes = () => {
 
-  console.log('%cReact <SuperList /> ' + log, 'color: red');
+  const [width, setWidth] = useState(window.innerWidth)
+  const [heigth, setHeigth] = useState(window.innerHeight)
 
-  return (
-    <div>
-      <ul>
-        {list.map(item => (
-          <li key={item}>
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+  const handleResize = () => {
+    setWidth(window.innerWidth)
+    setHeigth(window.innerHeight)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+
+  }, [])
+
+  return {
+    width,
+    heigth
+  }
 
 }
 
 const App = () => {
 
-  const [clicks, setCicks] = useState(0)
-
-  const add = () => {
-    setCicks(clicks + 1)
-  }
-
-  const memoList = useMemo(() => {
-
-    return (
-      <SuperList
-        list={[1, 2, 3, 4, 5]}
-        log='Memorizando'
-      />
-    )
-
-  }, [])
+  const { width, heigth } = useSizes()
 
   return (
     <div>
       <Header />
-      <button onClick={add}>
-        add ({clicks})
-      </button>
-      <SuperList
-        list={['mango', 'pera', 'platano', 'sandia', 'uva']}
-        log='Normal'
-      />
-
-      {memoList}
+      <h1>
+        Width: {width} Heigth: {heigth}
+      </h1>
     </div>
   )
 }
