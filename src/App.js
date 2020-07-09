@@ -17,42 +17,44 @@ const Header = () => {
   )
 }
 
-const useSizes = () => {
+const useFetch = (url) => {
 
-  const [width, setWidth] = useState(window.innerWidth)
-  const [heigth, setHeigth] = useState(window.innerHeight)
-
-  const handleResize = () => {
-    setWidth(window.innerWidth)
-    setHeigth(window.innerHeight)
-  }
+  const [data, setData] = useState([])
+  const [fetching, setFetching] = useState(true)
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize)
 
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setData(data)
+        setFetching(false)
+      })
 
-  }, [])
+  }, [url])
 
-  return {
-    width,
-    heigth
-  }
+  return [
+    data,
+    fetching
+  ]
 
 }
 
 const App = () => {
 
-  const { width, heigth } = useSizes()
+  const [users, isFetchig] = useFetch('http://jsonplaceholder.typicode.com/users')
 
   return (
     <div>
       <Header />
-      <h1>
-        Width: {width} Heigth: {heigth}
-      </h1>
+      {isFetchig && <h1>Cargando....</h1>}
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>
+            {user.name}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
