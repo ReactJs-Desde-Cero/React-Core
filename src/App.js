@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Counter, Title, Button } from './Components/Counter'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Counter>
+        <Title />
+        <Title>
+          {(clicks) => (
+            <div>
+              <h1>{clicks} Clicks</h1>
+            </div>
+          )}
+        </Title>
+        <Button type='increment' />
+        <Button type='decrement' />
+      </Counter>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
