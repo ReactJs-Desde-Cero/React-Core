@@ -1,42 +1,59 @@
-import React, { Component } from 'react'
-import { render } from '@testing-library/react'
+import React, { useState } from 'react'
 
-class Contador extends Component {
+const Header = ({ show }) => {
 
-    state = {
-        video: {
-            titulo: 'Super Video',
-            likes: 0
+    const activeStile = {
+        background: '#3d1f9a',
+        transform: 'scale(1)'
+    }
+
+    let headerStyles = {
+        background: 'black',
+        transform: 'scale(0)',
+        position: 'absolute',
+        textAlign: 'center',
+        borderRadius: '.4em',
+        color: '#FFF',
+        padding: '0.5em',
+        margin: '0.5em',
+        fontSize: '14px',
+        transition: 'all 800ms ease'
+    }
+
+    if (show) {
+        headerStyles = {
+            ...headerStyles,
+            ...activeStile
         }
     }
 
-    add = () => {
-        this.setState((state) => ({
-            video: {
-                ...state.video,
-                likes: state.video.likes + 1
-            }
-        }))
-    }
+    return (
+        <header style={headerStyles}>
+            <h1>
+                Transitiones CSS en linea
+                <span role='img' aria-label='fire'>
+                    🔥
+                </span>
+            </h1>
+        </header>
+    )
 
-    render() {
-        return (
-            <div>
-                <h1>{this.state.video.titulo} 🎮 </h1>
-                <button
-                    onClick={this.add}
-                >
-                    Likes: {this.state.video.likes}
-                </button>
-            </div>
-        )
-    }
 }
 
-const App = (props) => {
+const App = () => {
+
+    const [active, setActive] = useState(false)
+
+    const toggle = () => {
+        setActive(!active)
+    }
+
     return (
         <div>
-            <Contador />
+            <button onClick={toggle}>
+                {active ? 'Desactivar' : 'Activar'}
+            </button>
+            <Header show={active} />
         </div>
     )
 }
