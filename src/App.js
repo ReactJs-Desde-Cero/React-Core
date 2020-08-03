@@ -1,30 +1,30 @@
-import React from 'react'
-import Slides from './Components/Slides'
-
-const imag = [
-	{
-		src:
-			'https://images.pexels.com/photos/2774197/pexels-photo-2774197.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		title: 'Arte Extremo',
-	},
-	{
-		src:
-			'https://images.pexels.com/photos/936559/pexels-photo-936559.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		title: 'Bonito Reloj',
-	},
-	{
-		src:
-			'https://images.pexels.com/photos/3828240/pexels-photo-3828240.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-		title: 'Buena Foto',
-	},
-]
+import React, { useState } from "react"
+import { TransitionGroup, CSSTransition } from "react-transition-group"
+import "./App.css"
 
 const App = () => {
-	return (
-		<div>
-			<Slides images={imag} interval={1000} />
-		</div>
-	)
+  const [clicks, setClicks] = useState(0)
+
+  const increment = () => {
+    setClicks(clicks + 1)
+  }
+
+  const decrement = () => {
+    setClicks(clicks - 1)
+  }
+  return (
+    <div>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
+      <div className="box">
+        <TransitionGroup>
+          <CSSTransition timeout={1000} classNames="fade" key={clicks}>
+            <div className="hola">{clicks}</div>
+          </CSSTransition>
+        </TransitionGroup>
+      </div>
+    </div>
+  )
 }
 
 export default App
