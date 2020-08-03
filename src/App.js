@@ -1,26 +1,30 @@
 import React from 'react'
-import { Acordion } from './Components/Acordion'
+import Slides from './Components/Slides'
+
+const imag = [
+	{
+		src:
+			'https://images.pexels.com/photos/2774197/pexels-photo-2774197.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+		title: 'Arte Extremo',
+	},
+	{
+		src:
+			'https://images.pexels.com/photos/936559/pexels-photo-936559.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+		title: 'Bonito Reloj',
+	},
+	{
+		src:
+			'https://images.pexels.com/photos/3828240/pexels-photo-3828240.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+		title: 'Buena Foto',
+	},
+]
 
 const App = () => {
-    return (
-        <div>
-            <Acordion
-                title='Nanatsu no Taizai'
-                content='Meliodas es hijo del rey Demonio y Elizabet es hija de la Deidad Suprema y no pueden estar juntos por que no esta permitido que un demonio este con un angel'
-                bgcolor='black'
-            />
-            <Acordion
-                title='DragonBall Heroes'
-                content='Ya no esta muy bueno por que ahora parece que pokemon se ha incluido en ese anime y no gusta  :V'
-                bgcolor='purple'
-            />
-            <Acordion
-                title='Nanuto'
-                content='Un anime epico que nunca olvidare, te enseña que uno nunca debe de rendirse por lo que quiere tener y es un ejemplo a seguir y lo mejor de todo que habra acabado Naruto pero aun sigure Boruto que parece que esta llendo por buen camino'
-            // bgcolor='purple'
-            />
-        </div>
-    )
+	return (
+		<div>
+			<Slides images={imag} interval={1000} />
+		</div>
+	)
 }
 
 export default App
