@@ -22,6 +22,7 @@ module.exports = {
     'react/button-has-type': 0,
     'import/no-extraneous-dependencies': 0,
     'react/jsx-indent': 0,
+    'max-len': ["error", { "code": 110 }],
     'react/jsx-indent-props': [2, 4],
     indent: [2, 4, {'SwitchCase': 1, 'VariableDeclarator': 1}],
     quotes: [2, 'single', { avoidEscape: true }],
