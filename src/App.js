@@ -7,8 +7,10 @@ const colorPrincipal = 'tomato'
 // Constante Completa
 const paddingBasic = 'padding: 0.4em;'
 
+const getLinearGradient = (rot, color1, color2) => `background: linear-gradient(${rot}, ${color1}, ${color2});`
+
 const Header = styled.header`
-    background: ${colorPrincipal};
+    ${getLinearGradient('50deg', 'orange', colorPrincipal)}
     text-aling: center;
     border-radius: 0.2em;
     color: #FFF;
