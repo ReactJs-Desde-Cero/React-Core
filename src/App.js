@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const Header = styled.header`
@@ -22,30 +22,63 @@ margin: 0.4em;
 
 `
 
-const App = () => {
-  const [active, setActive] = useState(false)
+const ButtonSpecial = styled(Button)`
+    color: gray;
+    transition: all 300ms ease-out;
 
-  const click = () => {
-    setActive(!active)
+    &:hover {
+        transform: scale(1.3)
+    }
+
+`
+
+const Move = ({ className }) => {
+  const [mouseX, setMouseX] = useState(0)
+
+  const handleMove = (e) => {
+    setMouseX(e.clientX)
   }
 
-  return (
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMove)
 
-      <div>
-          <Header>
-              <h1>
-                  Styled Components
-              </h1>
-          </Header>
-          <Button onClick = { click }>
-              Un Boton
-          </Button>
-          <Button onClick = { click } active = { active }>
-              toggle
-          </Button>
+    return () => {
+      window.removeEventListener('mousemove', handleMove)
+    }
+  })
+
+  return (
+      <div className = { className }>
+          { mouseX }
       </div>
 
   )
 }
+
+const MoveStyled = styled(Move)`
+    background: yellow;
+    font-size: 30px;
+`
+
+const App = () => (
+
+    <div>
+        <Header>
+            <h1>
+                Styled Components
+            </h1>
+        </Header>
+        <Button>
+            Un Boton
+        </Button>
+
+        <ButtonSpecial>
+            Special
+        </ButtonSpecial>
+
+        <MoveStyled />
+    </div>
+
+)
 
 export default App
