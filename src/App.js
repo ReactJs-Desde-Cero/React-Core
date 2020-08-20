@@ -14,10 +14,9 @@ const Header = styled.header`
         color: purple;
     }
 
-    div {
-        width: 50px;
-        height: 50px;
-        background: #000;
+    .big {
+        font-size: 20px;
+        color: black;
     }
 
 `
@@ -28,9 +27,8 @@ const App = () => (
             <h1>
                 Styled Components
             </h1>
-            <div>*</div>
-            <div>
-                #
+            <div className="big">
+                Ejemplo
             </div>
         </Header>
     </div>
