@@ -22,6 +22,7 @@ module.exports = {
         'react/button-has-type': 0,
         "react/jsx-equals-spacing":[2, "always"],
         "react/jsx-curly-spacing":[2, "always"],
+        "no-confusing-arrow": [0, {"allowParens": false}],
         "import/prefer-default-export": "off",
         'import/no-extraneous-dependencies': 0,
         'react/jsx-indent': ['error', 4],

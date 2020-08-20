@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const Header = styled.header`
@@ -14,7 +14,7 @@ const Header = styled.header`
 
 const Button = styled.button`
 padding: 0.6em 1em;
-background: ${(props) => props.bg || 'black'};
+background: ${(props) => props.active ? 'purple' : 'black'};
 border-radius: 0.1em;
 color: #FFF;
 border: 0;
@@ -22,20 +22,30 @@ margin: 0.4em;
 
 `
 
-const App = () => (
-    <div>
-        <Header>
-            <h1>
-                Styled Components
-            </h1>
-        </Header>
-        <Button>
-            Un Boton
-        </Button>
-        <Button bg = "red">
-            toggle
-        </Button>
-    </div>
-)
+const App = () => {
+  const [active, setActive] = useState(false)
+
+  const click = () => {
+    setActive(!active)
+  }
+
+  return (
+
+      <div>
+          <Header>
+              <h1>
+                  Styled Components
+              </h1>
+          </Header>
+          <Button onClick = { click }>
+              Un Boton
+          </Button>
+          <Button onClick = { click } active = { active }>
+              toggle
+          </Button>
+      </div>
+
+  )
+}
 
 export default App
