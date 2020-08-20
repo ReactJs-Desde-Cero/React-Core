@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const Header = styled.header`
-    background: linear-gradient(20deg, #db7093, #daa357);
+    background: #db7093;
     text-align: center;
     border-radius: 0.2em;
     color: #FFF;
@@ -12,73 +12,26 @@ const Header = styled.header`
 
 `
 
-const Button = styled.button`
-padding: 0.6em 1em;
-background: ${(props) => props.active ? 'purple' : 'black'};
-border-radius: 0.1em;
-color: #FFF;
-border: 0;
-margin: 0.4em;
-
-`
-
-const ButtonSpecial = styled(Button)`
-    color: gray;
-    transition: all 300ms ease-out;
-
-    &:hover {
-        transform: scale(1.3)
-    }
-
-`
-
-const Move = ({ className }) => {
-  const [mouseX, setMouseX] = useState(0)
-
-  const handleMove = (e) => {
-    setMouseX(e.clientX)
-  }
-
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMove)
-
-    return () => {
-      window.removeEventListener('mousemove', handleMove)
-    }
-  })
-
-  return (
-      <div className = { className }>
-          { mouseX }
-      </div>
-
-  )
-}
-
-const MoveStyled = styled(Move)`
-    background: yellow;
-    font-size: 30px;
+const Input = styled.input.attrs((props) => ({
+  placeholder: props.placeholder || 'Ingresa el Texto',
+  type: props.type || 'text',
+}))`
+    padding: 1em;
+    border: 1px solid blue;
 `
 
 const App = () => (
-
     <div>
         <Header>
             <h1>
                 Styled Components
             </h1>
         </Header>
-        <Button>
-            Un Boton
-        </Button>
-
-        <ButtonSpecial>
-            Special
-        </ButtonSpecial>
-
-        <MoveStyled />
+        <Input />
+        <Input
+          placeholder='Tu cerveza favorita'
+        />
     </div>
-
 )
 
 export default App
