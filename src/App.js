@@ -9,22 +9,16 @@ const Header = styled.header`
     padding: 0.3em;
     margin: 0.3em;
     font-size: 14px;
-    transition: all 750ms ease-out;
-    opacity: 0.5;
 
-    &:hover {
-        opacity: 1;
-        background: #000;
+`
 
-        h1 {
-            color: red;
-        }
-
-    }
-
-    h1 {
-        color: purple;
-    }
+const Button = styled.button`
+padding: 0.6em 1em;
+background: ${(props) => props.bg || 'black'};
+border-radius: 0.1em;
+color: #FFF;
+border: 0;
+margin: 0.4em;
 
 `
 
@@ -35,6 +29,12 @@ const App = () => (
                 Styled Components
             </h1>
         </Header>
+        <Button>
+            Un Boton
+        </Button>
+        <Button bg = "red">
+            toggle
+        </Button>
     </div>
 )
 
