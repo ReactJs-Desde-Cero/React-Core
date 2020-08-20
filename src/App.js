@@ -10,14 +10,22 @@ const Header = styled.header`
     margin: 0.3em;
     font-size: 14px;
 
-`
+    @media (max-width: 700px) {
+        background: #000;
+        font-size: 20px;
 
-const Input = styled.input.attrs((props) => ({
-  placeholder: props.placeholder || 'Ingresa el Texto',
-  type: props.type || 'text',
-}))`
-    padding: 1em;
-    border: 1px solid blue;
+        h1 {
+            color: yellow;
+        }
+
+    }
+
+    @media(max-width: 1000px){
+        background: purple;
+        padding: 1em 0.3em;
+    }
+
+
 `
 
 const App = () => (
@@ -27,10 +35,6 @@ const App = () => (
                 Styled Components
             </h1>
         </Header>
-        <Input />
-        <Input
-          placeholder='Tu cerveza favorita'
-        />
     </div>
 )
 
