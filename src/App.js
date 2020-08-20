@@ -1,28 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 
-// Variable Basica
-const colorPrincipal = 'tomato'
-
-// Constante Completa
-const paddingBasic = 'padding: 0.4em;'
-
-const getLinearGradient = (rot, color1, color2) => `background: linear-gradient(${rot}, ${color1}, ${color2});`
-
 const Header = styled.header`
-    ${getLinearGradient('50deg', 'orange', colorPrincipal)}
-    text-aling: center;
+    background: linear-gradient(20deg, #db7093, #daa357);
+    text-align: center;
     border-radius: 0.2em;
     color: #FFF;
-    ${paddingBasic}
+    padding: 0.3em;
     margin: 0.3em;
     font-size: 14px;
 
-`
+    h1 {
+        color: purple;
+    }
 
-const Subtitle = styled.h2`
-
-    color: ${colorPrincipal};
+    div {
+        width: 50px;
+        height: 50px;
+        background: #000;
+    }
 
 `
 
@@ -32,10 +28,11 @@ const App = () => (
             <h1>
                 Styled Components
             </h1>
+            <div>*</div>
+            <div>
+                #
+            </div>
         </Header>
-        <Subtitle>
-            Ejemplo de Titulo
-        </Subtitle>
     </div>
 )
 
