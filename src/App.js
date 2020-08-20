@@ -1,6 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
 
+const sizes = {
+  mobile: '395px',
+  tablet: '768px',
+  desktop: '1024px',
+}
+
+const device = {
+  mobile: (styles) => {
+    return `@media (min-width: ${sizes.mobile}) {
+        ${styles}
+    }`
+  },
+
+  tablet: (styles) => {
+    return `@media (min-width: ${sizes.tablet}) {
+        ${styles}
+    }`
+  },
+
+  desktop: (styles) => {
+    return `@media (min-width: ${sizes.desktop}) {
+        ${styles}
+    }`
+  },
+}
+
 const Header = styled.header`
     background: #db7093;
     text-align: center;
@@ -10,21 +36,22 @@ const Header = styled.header`
     margin: 0.3em;
     font-size: 14px;
 
-    @media (max-width: 700px) {
+    ${device.mobile`
         background: #000;
         font-size: 20px;
+        color: yellow;
+    `}
 
-        h1 {
-            color: yellow;
-        }
+    ${device.tablet`
+        background: orange;
+        font-size: 25px;
+        color: #FFF;
+    `}
 
-    }
-
-    @media(max-width: 1000px){
-        background: purple;
-        padding: 1em 0.3em;
-    }
-
+    ${device.desktop`
+        background: blue;
+        font-size: 28px;
+    `}
 
 `
 
