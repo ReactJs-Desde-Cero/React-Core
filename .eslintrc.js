@@ -24,6 +24,7 @@ module.exports = {
         "space-infix-ops":0,
         "jsx-quotes": ["error", "prefer-single"],
         "no-undef": 0,
+        "no-debugger": 0,
         // "react/jsx-equals-spacing":[2, "always"],
         "react/jsx-curly-spacing":[2, "always"],
         "no-confusing-arrow": [0, {"allowParens": false}],
