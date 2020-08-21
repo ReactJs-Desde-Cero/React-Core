@@ -8,16 +8,26 @@ const Hola = () => (
     <h1>Hola</h1>
 )
 
-const Productos = (props) => {
-  debugger
-  return (
-      <h1>Productos</h1>
-  )
-}
+const Productos = (props) => (
+    <div>
+        <h1>Productos</h1>
+        <Link to='/productos/gamers'>Gamers </Link>
+        <Link to='/productos/hogar'>Hogar</Link>
+    </div>
+)
 
 const Home = () => (
     <h1>Home</h1>
 )
+
+const ProductosCategoria = ({ match }) => {
+  console.log(match)
+  return (
+      <div>
+          <h1>Categoria: { match.params.categoria }</h1>
+      </div>
+  )
+}
 
 const navStyles = {
   display: 'flex',
@@ -46,10 +56,6 @@ const Navegation = () => (
         <NavLink
           to='/productos'
           activeStyle={ NavActive }
-          isActive={ (match, location) => {
-            if (!match) return false
-            return !match.isExact
-          } }
         >
             Productos
         </NavLink>
@@ -62,7 +68,8 @@ const App = () => (
             <Navegation />
             <Route path='/' exact render={ Home } />
             <Route path='/hola' render={ Hola } />
-            <Route path='/productos' render={ Productos } />
+            <Route path='/productos' exact render={ Productos } />
+            <Route path='/productos/:categoria' render={ ProductosCategoria } />
         </BrowserRouter>
     </div>
 )
