@@ -13,17 +13,22 @@ const Home = () => (
     <h1>Home</h1>
 )
 
-const HolaNinja = () => (
-    <h1>Hola Ninja</h1>
-)
-
 const App = () => (
     <div>
         <BrowserRouter>
+            {/* <Route path='/' exact component={ () => (<h1>Home en linea</h1>) } /> */}
             <Route path='/' exact component={ Home } />
-            <Route path='/hola' exact component={ Hola } />
-            <Route path='/hola/ninja' component={ HolaNinja } />
-            <Route path='/productos' component={ Productos } />
+            <Route path='/hola' render={ Hola } />
+            <Route path='/productos'>
+                {/* <Productos /> */}
+                {({ match }) => {
+                  if (!match) return null
+                  return (
+                      <Productos />
+                  )
+                }}
+            </Route>
+            {/* <Route path='/productos' sensitive component={ Productos } /> */}
         </BrowserRouter>
     </div>
 )
