@@ -1,5 +1,8 @@
 import React from 'react'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import {
+  BrowserRouter, Route, Link, NavLink,
+} from 'react-router-dom'
+import './App.css'
 
 const Hola = () => (
     <h1>Hola</h1>
@@ -18,22 +21,36 @@ const navStyles = {
   justifyContent: 'space-around',
 }
 
+const NavActive = {
+  color: 'orangered',
+}
+
 const Navegation = () => (
     <nav style={ navStyles }>
-        <Link to={ {
-          pathname: '/',
-          search: '?ordernar=nombre',
-          hash: '#hash-otro',
-          state: {
-            name: 'ninja Pro',
-            age: 25,
-          },
-        } }
+        <NavLink
+          to='/'
+          exact
+          activeStyle={ NavActive }
         >
             Home
-        </Link>
-        <Link to='/hola'>Hola </Link>
-        <Link to='/productos' replace>Productos </Link>
+        </NavLink>
+        <NavLink
+          to='/hola'
+          activeClassName='navActive'
+        >
+            Hola
+        </NavLink>
+        <NavLink
+          to='/productos'
+          activeStyle={ NavActive }
+          isActive={ (match, location) => {
+            console.log(match)
+            if (!match) return false
+            return !match.isExact
+          } }
+        >
+            Productos
+        </NavLink>
     </nav>
 )
 
@@ -43,7 +60,7 @@ const App = () => (
             <Navegation />
             <Route path='/' exact render={ Home } />
             <Route path='/hola' render={ Hola } />
-            <Route path='/productos' render={ Productos } />
+            <Route path='/productos/:id?' render={ Productos } />
         </BrowserRouter>
     </div>
 )
