@@ -28,6 +28,7 @@ module.exports = {
         "no-self-compare": 0,
         "no-constant-condition": 0,
         "react/jsx-one-expression-per-line": 0,
+        "new-cap": 0,
         // "react/jsx-equals-spacing":[2, "always"],
         "react/jsx-curly-spacing":[2, "always"],
         "no-confusing-arrow": [0, {"allowParens": false}],

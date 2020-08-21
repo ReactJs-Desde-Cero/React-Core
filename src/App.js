@@ -3,6 +3,7 @@ import {
   BrowserRouter, Route, Link, NavLink,
 } from 'react-router-dom'
 import './App.css'
+import queryString from 'query-string'
 
 const Hola = () => (
     <h1>Hola</h1>
@@ -59,8 +60,34 @@ const Navegation = () => (
         >
             Productos
         </NavLink>
+        <NavLink
+          to='/ropa'
+          activeStyle={ navStyles }
+        >
+            Ropa
+        </NavLink>
     </nav>
 )
+
+const Ropa = ({ location }) => {
+
+  // const query = new URLSearchParams(location.search)
+  // const color = query.get('color')
+  // const talla = query.get('talla')
+  // otra manera de trabajar con parametros
+  const { color, talla } = new queryString.parse(location.search)
+  return (
+      <div>
+          <h1>Ropa</h1>
+          <div>
+              Color: { color }
+          </div>
+          <div>
+              Talla: { talla }
+          </div>
+      </div>
+  )
+}
 
 const App = () => (
     <div>
@@ -70,6 +97,7 @@ const App = () => (
             <Route path='/hola' render={ Hola } />
             <Route path='/productos' exact render={ Productos } />
             <Route path='/productos/:categoria' render={ ProductosCategoria } />
+            <Route path='/ropa' render={ Ropa } />
         </BrowserRouter>
     </div>
 )
