@@ -7,8 +7,8 @@ import './App.css'
 const Navegation = () => (
     <nav>
         <NavLink to='/' exact activeClassName='active'>Home</NavLink>
-        <NavLink to='/login' activeClassName='active'>Login</NavLink>
-        <NavLink to='/perfil' activeClassName='active'>Perfil</NavLink>
+        <NavLink to='/ninja' activeClassName='active'>Ninja</NavLink>
+        <NavLink to='/videos' activeClassName='active'>Videos</NavLink>
     </nav>
 )
 
@@ -16,37 +16,53 @@ const Home = () => (
     <h1>Home</h1>
 )
 
-const Login = ({location}) => {
-  if (location.state) {
-    return <h2>{location.state.message}</h2>
-  }
+const Ninja = () => (
+    <h1>Ninja</h1>
+)
 
+const Videos = () => (
+    <h1>Videos</h1>
+)
+
+const NavegacionInperativa = ({history}) => {
+  console.log(history)
   return (
-      <h1>Login</h1>
+      <div>
+          <button onClick={history.goBack}>
+              Atras
+          </button>
+          <button onClick={history.goForward}>
+              Adelante
+          </button>
+          <button onClick={() => {
+            history.go(2)
+          }}
+          >
+              Go 2
+          </button>
+          <button onClick={() => {
+            history.push('/ninja')
+          }}
+          >
+              GO NINJA
+          </button>
+          <button onClick={() => {
+            history.replace('/ninja')
+          }}
+          >
+              Replace
+          </button>
+      </div>
   )
-}
-
-const isAuth = false
-
-const Perfil = () => {
-  return isAuth
-    ? <h2>Bienvenido a tu Perfil</h2>
-    : <Redirect to={ {
-      pathname: '/login',
-      state: {
-        message: 'Debes hacer login para acceder a tu perfil',
-      },
-    } }
-    />
 }
 
 const App = () => (
     <BrowserRouter>
         <Navegation />
+        <Route render={NavegacionInperativa} />
         <Route path='/' exact render={ Home } />
-        <Route path='/login' exact render={ Login } />
-        <Route path='/perfil' exact render={ Perfil } />
-        <Redirect from='/p' to='/perfil' />
+        <Route path='/ninja' exact render={ Ninja } />
+        <Route path='/videos' exact render={ Videos } />
     </BrowserRouter>
 )
 

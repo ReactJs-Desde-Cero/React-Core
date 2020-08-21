@@ -35,7 +35,7 @@ module.exports = {
         "react/jsx-indent-props":0,
         "no-console": 0,
         // "react/jsx-equals-spacing":[2, "always"],
-        "react/jsx-curly-spacing":[2, "always"],
+        "react/jsx-curly-spacing":[0, "always"],
         "no-confusing-arrow": [0, {"allowParens": false}],
         "import/prefer-default-export": "off",
         'import/no-extraneous-dependencies': 0,
