@@ -1,9 +1,0 @@
-nav {
-    display: flex;
-    justify-content: space-around;
-    line-height: 3;
-}
-
-a.active {
-    color: #ff008d;
-}
