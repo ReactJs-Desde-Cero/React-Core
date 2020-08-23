@@ -1,31 +1,6 @@
 import { createStore } from 'redux'
-
-// Nombre de constantes
-const INCREMENT = 'INCREMENT'
-const DECREMENT = 'DECREMENT'
-
-// Reducer
-// Es una funcion pura que nos regresa el
-// estado actual
-
-const initialState = 0
-
-function counter(state = initialState, action) {
-  switch (action.type) {
-    case 'INCREMENT':
-      return state + 1
-
-    case 'DECREMENT':
-      return state - 1
-
-    default:
-      return state
-  }
-}
-
-// store.subscribe(() => {
-//   console.log(store.getState())
-// })
+import rootReducer from './reducers'
+import { INCREMENT, DECREMENT } from './reducers/counter'
 
 // Creadores de acciones
 export const increment = () => {
@@ -40,19 +15,8 @@ export const decrement = () => {
   }
 }
 
-// Acciones
-// store.dispatch(increment())
-
-// setTimeout(() => {
-//   store.dispatch(decrement())
-// }, 2000)
-
-// store.getState()
-// store.dispatch()
-// store.subscribe(fun)
-
 // Store
 // Almacenamiento de nuestro estado
-const store = createStore(counter)
+const store = createStore(rootReducer)
 
 export default store
