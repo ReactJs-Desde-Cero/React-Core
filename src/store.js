@@ -1,7 +1,6 @@
 import { createStore } from 'redux'
 
 // Nombre de constantes
-
 const INCREMENT = 'INCREMENT'
 const DECREMENT = 'DECREMENT'
 
@@ -24,35 +23,36 @@ function counter(state = initialState, action) {
   }
 }
 
-// Store
-// Almacenamiento de nuestro estado
-const store = createStore(counter)
-
-store.subscribe(() => {
-  console.log(store.getState())
-})
+// store.subscribe(() => {
+//   console.log(store.getState())
+// })
 
 // Creadores de acciones
-const increment = () => {
+export const increment = () => {
   return {
     type: INCREMENT
   }
 }
 
-const decrement = () => {
+export const decrement = () => {
   return {
     type: DECREMENT
   }
 }
 
-store.dispatch(increment())
+// Acciones
+// store.dispatch(increment())
 
-setTimeout(() => {
-  store.dispatch(decrement())
-}, 2000)
+// setTimeout(() => {
+//   store.dispatch(decrement())
+// }, 2000)
 
 // store.getState()
 // store.dispatch()
 // store.subscribe(fun)
+
+// Store
+// Almacenamiento de nuestro estado
+const store = createStore(counter)
 
 export default store

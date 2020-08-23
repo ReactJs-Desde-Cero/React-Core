@@ -19,7 +19,7 @@ const Counter = (props) => {
 
   // const decrement = () => {
   //   props.dispatch({
-  //     type: 'DECREMENT'
+  //     type: 'INCREMENT'
   //   })
   // }
 
@@ -45,12 +45,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Counter)
-
-// Maneras de Conectar
-// const CounterConnected = connect()(Counter)
-
-// export default CounterConnected
+export default connect(mapStateToProps, mapDispatchToProps)(Counter)
+// Maneras de Exportar
+// const CounterConnect = connect()(Counter)
+// export default CounterConnect
