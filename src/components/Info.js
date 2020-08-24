@@ -1,10 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { updateName } from '../redux/actions/userAction'
 
 const Info = (props) => {
+  const handleChange = (e) => {
+    const name = e.target.value
+    props.updateName(name)
+  }
+
   return (
       <div>
-          <h1>{props.name} - {props.counter}</h1>
+          <h1>{props.user.name} - {props.user.country}</h1>
+          {/* <button onClick={props.updateName}>
+              Actualizar Nombre
+          </button><br /> */}
+          <input onChange={handleChange} type='text' />
+          <br />
       </div>
   )
 }
@@ -12,12 +23,13 @@ const Info = (props) => {
 const mapStateToProps = (state) => {
   return {
     counter: state.counter,
-    name: state.user.name
+    user: state.user
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    updateName: (name) => dispatch(updateName(name))
   }
 }
 

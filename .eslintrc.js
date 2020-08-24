@@ -35,6 +35,7 @@ module.exports = {
         "react/jsx-wrap-multilines":0,
         "react/jsx-indent-props":0,
         "no-console": 0,
+        "no-const-assign": 0,
         // "react/jsx-equals-spacing":[2, "always"],
         "react/jsx-curly-spacing":[0, "always"],
         "default-case": 0,
