@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {} from '../store'
 
 const Info = (props) => {
   return (
@@ -12,16 +11,14 @@ const Info = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    name: state.user.name,
-    counter: state.counter
+    counter: state.counter,
+    name: state.user.name
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-
+  return {
+  }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Info)
+export default connect(mapStateToProps, mapDispatchToProps)(Info)

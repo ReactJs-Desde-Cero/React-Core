@@ -1,42 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { increment, decrement } from '../store'
+import { increment, decrement } from '../redux/actions/counterAction'
 
-const Counter = ({ increment, decrement, counter, name }) => {
-  // const inc = () => {
-  //   props.dispatch(increment())
-  // }
-
-  // const dec = () => {
-  //   props.dispatch(decrement())
-  // }
-
-  // const increment = () => {
-  //   props.dispatch({
-  //     type: 'INCREMENT'
-  //   })
-  // }
-
-  // const decrement = () => {
-  //   props.dispatch({
-  //     type: 'INCREMENT'
-  //   })
-  // }
-
+const Counter = (props) => {
   return (
       <div>
-          <button onClick={increment}>+</button>
-          <button onClick={decrement}>-</button>
-          <h1>{counter}</h1>
-          <h2>{name}</h2>
+          <button onClick={props.increment}>+</button>
+          <button onClick={props.decrement}>-</button>
+          <h1>{ props.counter }</h1>
+          <h2>{props.name}</h2>
       </div>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
-    name: state.user.name,
-    counter: state.counter
+    counter: state.counter,
+    name: state.user.name
   }
 }
 
@@ -48,6 +28,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter)
-// Maneras de Exportar
-// const CounterConnect = connect()(Counter)
-// export default CounterConnect

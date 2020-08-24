@@ -1,4 +1,4 @@
-function user(state = { name: 'Alexander' }, action) {
+function user(state = { name: 'Alexander'}, action) {
   switch (action.type) {
     default:
       return state
