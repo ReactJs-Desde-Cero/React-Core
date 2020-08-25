@@ -1,11 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
+import thunk from 'redux-thunk'
 import rootReducer from './reducers/index'
-
-// const logger = (store) => (next) => (action) => {
-//   console.log('Ha ocurrido una accion')
-//   next(action)
-// }
 
 const confirmDeleteTodo = (store) => (next) => (action) => {
 
@@ -18,27 +14,8 @@ const confirmDeleteTodo = (store) => (next) => (action) => {
     next(action)
   }
 
-  //   setTimeout(() => {
-  //     next(action)
-  //   }, 1000)
-
-  //   if (action.type !== 'ADD_TODO') {
-  //     setTimeout(() => {
-  //       store.dispatch({
-  //         type: 'ADD_TODO',
-  //         payload: {
-  //           text: 'NOtas Notas',
-  //           id: '2derd4',
-  //           checked: false
-  //         }
-  //       })
-  //     }, 2000)
-  //   }
-
 }
 
-const midleware = applyMiddleware(confirmDeleteTodo, logger)
-
-const store = createStore(rootReducer, midleware)
+const store = createStore(rootReducer, applyMiddleware(confirmDeleteTodo, logger, thunk))
 
 export default store

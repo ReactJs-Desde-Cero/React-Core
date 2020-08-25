@@ -4,7 +4,8 @@ import store from './redux/store'
 // import Counter from './components/Counter'
 // import Info from './components/Info'
 // import Fruits from './components/Fruits'
-import Todos from './components/Todos'
+// import Todos from './components/Todos'
+import Controller from './components/controller'
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
               {/* <Fruits /> */}
               {/* <Info /> */}
               {/* <Counter /> */}
-              <Todos />
+              {/* <Todos /> */}
+              <Controller />
           </div>
       </Provider>
   )
