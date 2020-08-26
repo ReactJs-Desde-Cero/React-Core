@@ -46,6 +46,7 @@ module.exports = {
         "arrow-parens": 0,
         "no-alert": 0,
         "jsx-a11y/no-noninteractive-element-interactions": 0,
+        "no-restricted-globals": 1,
         "jsx-a11y/click-events-have-key-events": 0,
         // "react/jsx-equals-spacing":[2, "always"],
         "react/jsx-curly-spacing":[0, "always"],
