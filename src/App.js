@@ -1,12 +1,20 @@
 import React from 'react'
 
+export const Title = () => (
+    <h1>Introduccion a Unit Testing</h1>
+)
+
 const App = () => {
   return (
-      <div>
+      <section>
           <h1>Introduccion a Testing</h1>
-          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta voluptas voluptate repellat quod facilis! Ea repudiandae eos in recusandae ipsam rem eligendi nihil! Incidunt suscipit nesciunt obcaecati nihil dolorem minus!</p>
-          <h2>Otro marcado</h2>
-      </div>
+          <div className='container'>
+              <span num={3} active={false}>Primero</span>
+              <span num='3' active='false'>Segundo</span>
+          </div>
+          <input type='text' />
+          <input type='checkbox' />
+      </section>
   )
 }
 
