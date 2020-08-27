@@ -47,6 +47,7 @@ module.exports = {
         "no-alert": 0,
         "jsx-a11y/no-noninteractive-element-interactions": 0,
         "no-restricted-globals": 1,
+        "prefer-promise-reject-errors": 0,
         "jsx-a11y/click-events-have-key-events": 0,
         // "react/jsx-equals-spacing":[2, "always"],
         "react/jsx-curly-spacing":[0, "always"],
