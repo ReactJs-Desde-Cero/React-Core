@@ -22,3 +22,10 @@ export const getDataPromiseError = () => {
     }, 300)
   })
 }
+
+export const getUsers = async () => {
+  const res = await fetch('http://jsonplaceholder.typicode.com/users/5')
+  const user = await res.json()
+
+  return user
+}

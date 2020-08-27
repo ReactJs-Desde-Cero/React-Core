@@ -1,4 +1,4 @@
-import { getDataCallback, getDataPromise, getDataPromiseError } from './async'
+import { getDataCallback, getDataPromise, getDataPromiseError, getUsers } from './async'
 
 describe('Haciendo test a operaciones asyncronas', () => {
 
@@ -47,6 +47,13 @@ describe('Haciendo test a operaciones asyncronas', () => {
       expect(error).toBe('Error')
     }
 
+  })
+
+  test('Probando promesas con solicitudes HTTP', async () => {
+    const user = await getUsers()
+    expect(user).toHaveProperty('username')
+    expect(user).toHaveProperty('id')
+    expect(user).toHaveProperty('email')
   })
 
 })
